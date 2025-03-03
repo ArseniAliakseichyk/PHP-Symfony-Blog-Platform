@@ -1,0 +1,43 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="text-center mb-5">
+    <h1 class="display-4">Welcome to Symfony App</h1>
+    <p class="lead">A simple blog platform built with Symfony</p>
+</div>
+
+{% if is_granted('ROLE_USER') %}
+<div class="d-grid gap-2 col-6 mx-auto mb-4">
+    <a href="{{ path('post_new') }}" class="btn btn-primary btn-lg">Create New Post</a>
+</div>
+{% endif %}
+
+<div class="container">
+    <h2 class="mb-4">All Posts</h2>
+
+    {% for post in posts %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">
+                Category: {{ post.category.name }}<br>
+                Author: {{ post.author.username }}
+            </p>
+
+            {% if app.user and app.user == post.author %}
+                <form action="{{ path('post_delete', {'id': post.id}) }}" method="post" class="mt-2">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <p>No posts found.</p>
+{% endfor %}
+
+</div>
+{% endblock %}

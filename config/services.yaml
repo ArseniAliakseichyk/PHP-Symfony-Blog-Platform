@@ -1,0 +1,19 @@
+parameters:
+
+services:
+    App\Command\CreateUserCommand:
+        tags: [console.command]
+        
+    App\Command\ChangePasswordCommand:
+        tags: [console.command]
+        
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'

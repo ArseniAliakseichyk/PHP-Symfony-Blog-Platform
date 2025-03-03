@@ -1,0 +1,35 @@
+{# templates/security/login.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="form-wrapper">
+    <form method="post" class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Sign In</h2>
+            
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Email</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="username" 
+                       class="form-control" autocomplete="email" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="_password" id="password" 
+                       class="form-control" autocomplete="current-password" required>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
