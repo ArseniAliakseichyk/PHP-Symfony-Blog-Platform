@@ -13,10 +13,21 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if ($options['is_admin']) {
+    $builder->add('roles', ChoiceType::class, [
+        'choices' => [
+            'User' => 'ROLE_USER',
+            'Admin' => 'ROLE_ADMIN',
+        ],
+        'multiple' => true,
+        'expanded' => true,
+    ]);
+}
         $builder
             ->add('username', TextType::class, [
                 'label' => 'Username',
@@ -33,6 +44,13 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('plainPassword', RepeatedType::class, [
+    'constraints' => [
+        new NotBlank(),
+        new Length([
+            'min' => 6,
+            'max' => 50,
+        ]),
+    ],
             'mapped' => false,
             'type' => PasswordType::class,
             'invalid_message' => 'Passwords must match',
@@ -48,6 +66,8 @@ class RegistrationFormType extends AbstractType
         'csrf_protection' => true,
         'csrf_field_name' => '_token',
         'csrf_token_id'   => 'registration',
+        'is_admin' => false,
     ]);
 }
+
 }

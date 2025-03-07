@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
 #[UniqueEntity(fields: ['username'], message: 'This username is already taken')]
-#[UniqueEntity(fields: ['email'], message: 'This email is already taken')] // Добавить уникальность для email
+#[UniqueEntity(fields: ['email'], message: 'This email is already taken')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

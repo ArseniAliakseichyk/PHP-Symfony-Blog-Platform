@@ -9,6 +9,21 @@ use App\Repository\PostRepository;
 #[ORM\Table(name: "posts")]
 class Post
 {
+    #[ORM\Column(type: 'datetime')]
+private \DateTime $createdAt;
+
+public function __construct()
+{
+    $this->createdAt = new \DateTime();
+}
+
+public function getCreatedAt(): \DateTime
+{
+    return $this->createdAt;
+}
+    #[ORM\Column(type: 'text')]
+    private string $content;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -24,6 +39,15 @@ class Post
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "posts")]
     #[ORM\JoinColumn(nullable: false)]
     private User $author;
+
+    public function getContent(): string {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self {
+        $this->content = $content;
+        return $this;
+    }
 
     public function getId(): ?int
     {

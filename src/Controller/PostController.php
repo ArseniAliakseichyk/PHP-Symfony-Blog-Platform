@@ -14,8 +14,15 @@ class PostController extends AbstractController
 {
     #[Route('/post/{id}/delete', name: 'post_delete', methods: ['POST'])]
 #[IsGranted('POST_DELETE', subject: 'post')]
-public function delete(Post $post, EntityManagerInterface $entityManager): Response
-{
+public function delete(
+    Request $request,
+    Post $post,
+    EntityManagerInterface $entityManager
+): Response {
+    $csrfToken = $request->request->get('_token');
+    if (!$this->isCsrfTokenValid('delete'.$post->getId(), $csrfToken)) {
+        throw $this->createAccessDeniedException('Invalid CSRF token');
+    }
     $entityManager->remove($post);
     $entityManager->flush();
 
