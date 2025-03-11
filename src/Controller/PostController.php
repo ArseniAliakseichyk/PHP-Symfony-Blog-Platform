@@ -12,8 +12,31 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PostController extends AbstractController
 {
+    
     #[Route('/post/{id}/delete', name: 'post_delete', methods: ['POST'])]
 #[IsGranted('POST_DELETE', subject: 'post')]
+#[Route('/post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
+#[IsGranted('POST_EDIT', subject: 'post')]
+public function edit(
+    Request $request,
+    Post $post,
+    EntityManagerInterface $entityManager
+): Response {
+    $form = $this->createForm(PostType::class, $post);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Post updated!');
+        return $this->redirectToRoute('home');
+    }
+
+    return $this->render('post/edit.html.twig', [
+        'form' => $form->createView(),
+        'post' => $post,
+    ]);
+}
 public function delete(
     Request $request,
     Post $post,
