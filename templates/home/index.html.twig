@@ -25,10 +25,15 @@
                     <h5 class="card-title">{{ post.title }}</h5>
                     <p class="card-text">{{ post.content|length > 100 ? post.content|slice(0, 100) ~ '...' : post.content }}</p>
                     <div class="text-muted small mb-2">
-                        <span>Category: <strong>{{ post.category.name }}</strong></span> &nbsp;|&nbsp;
-                        <span>Author: <strong>{{ post.author.username }}</strong></span> &nbsp;|&nbsp;
-                        <span>{{ post.createdAt|date('d.m.Y H:i') }}</span>
-                    </div>
+    <span>Category: <strong>{{ post.category.name }}</strong></span> &nbsp;|&nbsp;
+    <span>Author: <strong>{{ post.author.username }}</strong></span> &nbsp;|&nbsp;
+    <span>
+        {{ post.createdAt|date('d.m.Y H:i') }}
+        {% if post.updatedAt and post.updatedAt > post.createdAt %}
+            (edited at {{ post.updatedAt|date('d.m.Y H:i') }})
+        {% endif %}
+    </span>
+</div>
 
                     {% if app.user and app.user == post.author %}
     <div class="d-flex gap-2 mt-3">

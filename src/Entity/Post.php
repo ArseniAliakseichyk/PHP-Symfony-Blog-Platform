@@ -7,14 +7,36 @@ use App\Repository\PostRepository;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\Table(name: "posts")]
+#[ORM\HasLifecycleCallbacks]
 class Post
 {
+    #[ORM\Column(type: 'datetime', nullable: true)]
+private ?\DateTime $updatedAt = null;
+
+public function getUpdatedAt(): ?\DateTime
+{
+    return $this->updatedAt;
+}
+
+public function setUpdatedAt(\DateTime $updatedAt): self
+{
+    $this->updatedAt = $updatedAt;
+    return $this;
+}
+
+#[ORM\PreUpdate]
+public function setUpdatedAtValue(): void
+{
+    $this->updatedAt = new \DateTime();
+}
+
     #[ORM\Column(type: 'datetime')]
 private \DateTime $createdAt;
 
 public function __construct()
 {
     $this->createdAt = new \DateTime();
+    $this->updatedAt = new \DateTime();
 }
 
 public function getCreatedAt(): \DateTime
