@@ -43,11 +43,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $plainPassword = null;
 
     public function __construct()
-    {
-        $this->posts = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->roles = ['ROLE_USER'];
-    }
+{
+    $this->posts = new ArrayCollection();
+    $this->comments = new ArrayCollection();
+    $this->roles = ['ROLE_USER'];
+}
 
     public function getId(): ?int
     {

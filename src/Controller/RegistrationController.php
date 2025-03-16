@@ -20,12 +20,13 @@ public function register(
     EntityManagerInterface $entityManager
 ): Response {
     $user = new User();
-    $form = $this->createForm(RegistrationFormType::class, $user, [
-    'is_admin' => $this->isGranted('ROLE_ADMIN'),
-]);
+    $form = $this->createForm(RegistrationFormType::class, $user);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        if (empty(array_intersect($user->getRoles(), ['ROLE_USER', 'ROLE_ADMIN']))) {
+            $user->setRoles(array_merge($user->getRoles(), ['ROLE_USER']));
+        }
         $user->setPassword(
             $passwordHasher->hashPassword(
                 $user,

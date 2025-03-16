@@ -35,7 +35,7 @@
     </span>
 </div>
 
-                    {% if app.user and app.user == post.author %}
+                    {% if app.user and (app.user == post.author or is_granted('ROLE_ADMIN')) %}
     <div class="d-flex gap-2 mt-3">
         <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-sm btn-warning">Edit</a>
         <form action="{{ path('post_delete', {'id': post.id}) }}" method="post">

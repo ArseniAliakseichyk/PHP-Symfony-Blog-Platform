@@ -19,15 +19,21 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['is_admin']) {
-    $builder->add('roles', ChoiceType::class, [
-        'choices' => [
-            'User' => 'ROLE_USER',
-            'Admin' => 'ROLE_ADMIN',
-        ],
-        'multiple' => true,
-        'expanded' => true,
-    ]);
-}
+        $builder->add('roles', ChoiceType::class, [
+            'choices' => [
+                'Admin' => 'ROLE_ADMIN',
+                'User' => 'ROLE_USER',
+            ],
+            'multiple' => true,
+            'expanded' => true,
+            'data' => ['ROLE_USER'],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'You must select at least one role',
+                ]),
+            ],
+        ]);
+    }
         $builder
             ->add('username', TextType::class, [
                 'label' => 'Username',
