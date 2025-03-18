@@ -36,13 +36,18 @@
 </div>
 
                     {% if app.user and (app.user == post.author or is_granted('ROLE_ADMIN')) %}
-    <div class="d-flex gap-2 mt-3">
-        <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-sm btn-warning">Edit</a>
-        <form action="{{ path('post_delete', {'id': post.id}) }}" method="post">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
-            <button class="btn btn-danger btn-sm">Delete</button>
-        </form>
-    </div>
+<div class="d-flex gap-2 mt-3">
+    <a href="{{ path('post_edit', {'id': post.id}) }}" 
+       class="btn btn-sm btn-warning">Edit</a>
+    
+    <form action="{{ path('post_delete', {'id': post.id}) }}" 
+          method="post"
+          onsubmit="return confirm('Are you sure?')">
+        <input type="hidden" name="_token" 
+               value="{{ csrf_token('delete' ~ post.id) }}">
+        <button class="btn btn-danger btn-sm">Delete</button>
+    </form>
+</div>
 {% endif %}
                 </div>
             </div>

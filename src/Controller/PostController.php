@@ -13,9 +13,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PostController extends AbstractController
 {
     
-    #[Route('/post/{id}/delete', name: 'post_delete', methods: ['POST'])]
-#[IsGranted('POST_DELETE', subject: 'post')]
-#[Route('/post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
+ #[Route('/post/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
 #[IsGranted('POST_EDIT', subject: 'post')]
 public function edit(
     Request $request,
@@ -37,6 +35,8 @@ public function edit(
         'post' => $post,
     ]);
 }
+#[Route('/post/{id}/delete', name: 'post_delete', methods: ['POST'])]
+#[IsGranted('POST_DELETE', subject: 'post')]
 public function delete(
     Request $request,
     Post $post,
