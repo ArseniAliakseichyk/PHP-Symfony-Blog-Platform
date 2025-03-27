@@ -43,11 +43,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $plainPassword = null;
 
     public function __construct()
-{
-    $this->posts = new ArrayCollection();
-    $this->comments = new ArrayCollection();
-    $this->roles = ['ROLE_USER'];
-}
+    {
+        $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
+    }
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class, orphanRemoval: true)]
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setAuthor($this);
+        }
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
+            }
+        }
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -114,10 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function eraseCredentials(): void
-    {
-
-    }
+    public function eraseCredentials(): void {}
 
     public function getPosts(): Collection
     {
@@ -139,32 +161,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->posts->removeElement($post)) {
             if ($post->getAuthor() === $this) {
                 $post->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            if ($comment->getAuthor() === $this) {
-                $comment->setAuthor(null);
             }
         }
 

@@ -6,7 +6,7 @@ services:
         
     App\Command\ChangePasswordCommand:
         tags: [console.command]
-        
+
     _defaults:
         autowire: true
         autoconfigure: true

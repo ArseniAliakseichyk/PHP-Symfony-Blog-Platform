@@ -1,17 +1,64 @@
-{# templates/post/new.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}New Post
+{% endblock %}
 
 {% block body %}
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title mb-4">Create New Post</h2>
-        
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-        {{ form_end(form) }}
-    </div>
-</div>
+	<div class="container fade-in">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card shadow-sm">
+					<div class="card-body p-5">
+						<h2 class="card-title mb-4">Create New Post</h2>
+
+						{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+						<div class="mb-3">
+							{{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.title, {
+                                'attr': {
+                                    'class': 'form-control' ~ (form_errors(form.title) ? ' is-invalid' : ''),
+                                    'placeholder': 'Enter post title'
+                                }
+                            }) }}
+							<div class="invalid-feedback">
+								{{ form_errors(form.title) }}
+							</div>
+						</div>
+
+						<div class="mb-3">
+							{{ form_label(form.content, 'Content', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.content, {
+                                'attr': {
+                                    'class': 'form-control' ~ (form_errors(form.content) ? ' is-invalid' : ''),
+                                    'placeholder': 'Write your post content here',
+                                    'rows': 6
+                                }
+                            }) }}
+							<div class="invalid-feedback">
+								{{ form_errors(form.content) }}
+							</div>
+						</div>
+
+						<div class="mb-3">
+							{{ form_label(form.category, 'Category', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.category, {
+                                'attr': {
+                                    'class': 'form-select' ~ (form_errors(form.category) ? ' is-invalid' : '')
+                                }
+                            }) }}
+							<div class="invalid-feedback">
+								{{ form_errors(form.category) }}
+							</div>
+						</div>
+
+						<div class="d-flex gap-2 mt-4">
+							<button class="btn btn-primary btn-lg rounded-pill" type="submit">{{ button_label|default('Save') }}</button>
+							<a href="{{ path('home') }}" class="btn btn-secondary btn-lg rounded-pill">Cancel</a>
+						</div>
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

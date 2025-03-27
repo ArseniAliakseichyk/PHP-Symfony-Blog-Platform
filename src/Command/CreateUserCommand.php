@@ -25,30 +25,30 @@ class CreateUserCommand extends Command
     }
 
     protected function configure(): void
-{
-    $this
-        ->addArgument('email', InputArgument::REQUIRED, 'User email')
-        ->addArgument('username', InputArgument::REQUIRED, 'User username')
-        ->addArgument('password', InputArgument::REQUIRED, 'User password');
-}
+    {
+        $this
+            ->addArgument('email', InputArgument::REQUIRED, 'User email')
+            ->addArgument('username', InputArgument::REQUIRED, 'User username')
+            ->addArgument('password', InputArgument::REQUIRED, 'User password');
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
-{
-    $user = new User();
-    $user->setEmail($input->getArgument('email'));
-    $user->setUsername($input->getArgument('username'));
-    
-    $hashedPassword = $this->passwordHasher->hashPassword(
-        $user,
-        $input->getArgument('password')
-    );
-    
-    $user->setPassword($hashedPassword);
-    
-    $this->entityManager->persist($user);
-    $this->entityManager->flush();
+    {
+        $user = new User();
+        $user->setEmail($input->getArgument('email'));
+        $user->setUsername($input->getArgument('username'));
 
-    $output->writeln('User created successfully!');
-    return Command::SUCCESS;
-}
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $user,
+            $input->getArgument('password')
+        );
+
+        $user->setPassword($hashedPassword);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $output->writeln('User created successfully!');
+        return Command::SUCCESS;
+    }
 }

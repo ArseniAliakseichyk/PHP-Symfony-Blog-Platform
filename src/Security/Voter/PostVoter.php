@@ -38,12 +38,12 @@ final class PostVoter extends Voter
     }
 
     private function canEdit(Post $post, User $user): bool
-{
-    return $post->getAuthor() === $user || in_array('ROLE_ADMIN', $user->getRoles(), true);
-}
+    {
+        return $post->getAuthor() === $user || in_array('ROLE_ADMIN', $user->getRoles(), true);
+    }
 
-private function canDelete(Post $post, User $user): bool
-{
-    return $post->getAuthor() === $user || in_array('ROLE_ADMIN', $user->getRoles(), true);
-}
+    private function canDelete(Post $post, User $user): bool
+    {
+        return $post->getAuthor() === $user || in_array('ROLE_ADMIN', $user->getRoles(), true);
+    }
 }

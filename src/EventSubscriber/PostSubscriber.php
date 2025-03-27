@@ -21,7 +21,6 @@ class PostSubscriber implements DoctrineEventSubscriber
         $entity = $args->getObject();
 
         if ($entity instanceof Post) {
-
         }
     }
 }

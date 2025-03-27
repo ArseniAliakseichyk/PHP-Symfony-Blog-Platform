@@ -46,7 +46,7 @@ class ChangePasswordCommand extends Command
             $user,
             $input->getArgument('new-password')
         );
-        
+
         $user->setPassword($hashedPassword);
         $this->entityManager->flush();
 

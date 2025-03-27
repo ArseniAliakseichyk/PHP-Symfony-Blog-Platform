@@ -14,8 +14,5 @@ class LoginSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onLogin(InteractiveLoginEvent $event)
-    {
-
-    }
+    public function onLogin(InteractiveLoginEvent $event) {}
 }
