@@ -50,6 +50,7 @@ DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVers
 4. Create the database and run migrations:
 ```bash
 php bin/console doctrine:database:create
+php bin/console doctrine:schema:create
 php bin/console doctrine:migrations:migrate
 ```
 
