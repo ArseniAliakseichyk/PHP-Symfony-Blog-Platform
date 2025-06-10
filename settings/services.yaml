@@ -1,0 +1,22 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    System\Modules\:
+        resource: '../System/Modules/'
+        exclude:
+            - '../System/Modules/*/DependencyInjection/'
+
+    System\Modules\Account\AccountRegistrationController:
+        tags: ['controller.service_arguments']
+    System\Modules\Account\CreateAccountCommand:
+        tags: [console.command]
+    System\Modules\Account\UpdateCredentialsCommand:
+        tags: [console.command]
+    System\Modules\Article\EventSubscriber\ArticleSubscriber:
+        tags: ['doctrine.event_subscriber']
+
+    Doctrine\ORM\EntityManagerInterface: '@doctrine.orm.default_entity_manager'

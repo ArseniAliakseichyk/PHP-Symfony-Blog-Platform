@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'Login'|trans }}
+{% endblock %}
+
+{% block body %}
+	<div class="fade-in max-w-md mx-auto">
+		<div class="bg-white shadow-md rounded-lg p-6">
+			<h2 class="text-2xl font-bold mb-6 text-center">
+				<i class="bi bi-box-arrow-in-right mr-2"></i>
+				{{ 'Sign In'|trans }}</h2>
+			{% if error %}
+				<div class="bg-red-100 text-secondary p-4 rounded-md mb-4">
+					<i class="bi bi-exclamation-circle mr-2"></i>
+					{{ error.messageKey|trans(error.messageData, 'security') }}
+				</div>
+			{% endif %}
+			<form action="{{ path('auth_login') }}" method="post" class="space-y-4">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('auth_token') }}">
+				<div>
+					<label for="_username" class="block text-sm font-medium text-gray-700">{{ 'Email'|trans }}</label>
+					<input type="email" id="_username" name="_username" value="{{ last_username }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+				</div>
+				<div>
+					<label for="_password" class="block text-sm font-medium text-gray-700">{{ 'Password'|trans }}</label>
+					<input type="password" id="_password" name="_password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary" required>
+				</div>
+				<button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-secondary transition">
+					<i class="bi bi-box-arrow-in-right mr-2"></i>
+					{{ 'Sign In'|trans }}
+				</button>
+			</form>
+			<p class="mt-4 text-center text-sm text-gray-600">
+				{{ 'Don’t have an account?'|trans }}
+				<a href="{{ path('account_signup') }}" class="text-primary hover:underline">{{ 'Sign up'|trans }}</a>
+			</p>
+		</div>
+	</div>
+{% endblock %}

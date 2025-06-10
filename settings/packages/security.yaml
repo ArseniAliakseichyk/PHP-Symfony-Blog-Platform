@@ -1,0 +1,35 @@
+security:
+    password_hashers:
+        System\Modules\Account\Account:
+            algorithm: auto
+    providers:
+        app_account_provider:
+            entity:
+                class: System\Modules\Account\Account
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: app_account_provider
+            form_login:
+                login_path: auth_login
+                check_path: auth_login
+                default_target_path: main_page
+                enable_csrf: true
+                csrf_token_id: auth_token
+                csrf_parameter: _csrf_token
+                username_parameter: _username
+                password_parameter: _password
+            logout:
+                path: auth_logout
+                target: main_page
+    access_control:
+        - { path: ^/api, roles: ROLE_ADMIN }
+        - { path: ^/signup, roles: PUBLIC_ACCESS }
+        - { path: ^/auth/login, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/content, roles: ROLE_USER }
+        - { path: ^/feedback, roles: ROLE_USER }

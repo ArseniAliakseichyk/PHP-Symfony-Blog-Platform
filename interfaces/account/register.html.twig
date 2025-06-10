@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'Register'|trans }}
+{% endblock %}
+
+{% block body %}
+	<div class="fade-in max-w-md mx-auto">
+		<div class="bg-white shadow-md rounded-lg p-6">
+			<h2 class="text-2xl font-bold mb-6 text-center">
+				<i class="bi bi-person-plus mr-2"></i>
+				{{ 'Create Account'|trans }}</h2>
+			{{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
+			<div>
+				{{ form_label(registrationForm.displayName, 'Display Name'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+				{{ form_widget(registrationForm.displayName, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary'}}) }}
+				{{ form_errors(registrationForm.displayName, {'attr': {'class': 'text-secondary text-sm mt-1'}}) }}
+			</div>
+			<div>
+				{{ form_label(registrationForm.email, 'Email'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+				{{ form_widget(registrationForm.email, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary'}}) }}
+				{{ form_errors(registrationForm.email, {'attr': {'class': 'text-secondary text-sm mt-1'}}) }}
+			</div>
+			<div>
+				{{ form_label(registrationForm.plainPassword.first, 'Password'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+				{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary'}}) }}
+				{{ form_errors(registrationForm.plainPassword.first, {'attr': {'class': 'text-secondary text-sm mt-1'}}) }}
+			</div>
+			<div>
+				{{ form_label(registrationForm.plainPassword.second, 'Repeat Password'|trans, {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+				{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary'}}) }}
+				{{ form_errors(registrationForm.plainPassword.second, {'attr': {'class': 'text-secondary text-sm mt-1'}}) }}
+			</div>
+			<button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-secondary transition">
+				<i class="bi bi-person-check mr-2"></i>
+				{{ 'Register'|trans }}
+			</button>
+			{{ form_end(registrationForm) }}
+			<p class="mt-4 text-center text-sm text-gray-600">
+				{{ 'Already have an account?'|trans }}
+				<a href="{{ path('auth_login') }}" class="text-primary hover:underline">{{ 'Sign in'|trans }}</a>
+			</p>
+		</div>
+	</div>
+{% endblock %}
