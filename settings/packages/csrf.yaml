@@ -1,0 +1,12 @@
+framework:
+    form:
+        csrf_protection:
+            token_id: submit
+    csrf_protection:
+        stateless_token_ids:
+            - submit
+            - auth_token
+            - remove_account
+            - remove_article
+            - remove_feedback
+            - signup_token

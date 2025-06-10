@@ -1,0 +1,4 @@
+doctrine_fixtures:
+    loader:
+        directories:
+            - '%kernel.project_dir%/System/Modules'

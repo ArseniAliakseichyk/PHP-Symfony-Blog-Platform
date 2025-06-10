@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'Manage Accounts'|trans }}
+{% endblock %}
+
+{% block body %}
+	<div class="fade-in">
+		<h1 class="text-3xl font-bold mb-6">
+			<i class="bi bi-people mr-2"></i>
+			{{ 'Manage Accounts'|trans }}</h1>
+		<div class="bg-white shadow-md rounded-lg overflow-hidden">
+			<table class="w-full">
+				<thead class="bg-gray-50">
+					<tr>
+						<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'ID'|trans }}</th>
+						<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'Display Name'|trans }}</th>
+						<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'Email'|trans }}</th>
+						<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'Roles'|trans }}</th>
+						<th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ 'Actions'|trans }}</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-gray-200">
+					{% for account in accounts %}
+						<tr class="hover:bg-gray-50">
+							<td class="px-6 py-4 whitespace-nowrap">{{ account.id }}</td>
+							<td class="px-6 py-4 whitespace-nowrap">{{ account.displayName }}</td>
+							<td class="px-6 py-4 whitespace-nowrap">{{ account.email }}</td>
+							<td class="px-6 py-4 whitespace-nowrap">
+								{{ account.roles|join(', ')|trans }}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-right">
+								{% if account != app.user %}
+									{{ form_start(deleteForm, {'action': path('account_remove', {'id': account.id}), 'method': 'POST', 'attr': {'class': 'inline'}}) }}
+									<input type="hidden" name="_token" value="{{ csrf_token('remove_account' ~ account.id) }}">
+									<button type="submit" class="text-secondary hover:text-red-800" data-confirm="{{ 'Are you sure you want to remove this account?'|trans }}">
+										<i class="bi bi-trash"></i>
+										{{ 'Remove'|trans }}
+									</button>
+									{{ form_end(deleteForm) }}
+								{% else %}
+									<span class="text-gray-400">
+										<i class="bi bi-trash"></i>
+										{{ 'Cannot remove self'|trans }}</span>
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="5" class="px-6 py-4 text-center text-gray-500">{{ 'No accounts found'|trans }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
